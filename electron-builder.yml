@@ -1,0 +1,96 @@
+appId: com.mohamed.business
+# الاسم العربي يظهر في شريط قوائم macOS وقائمة ابدأ في ويندوز،
+# وأسماء ملفات التوزيع تبقى لاتينية لتفادي مشاكل أدوات النظام
+productName: حسابات
+copyright: © 2026
+
+directories:
+  buildResources: build
+  output: release/${version}
+
+files:
+  - out/**/*
+  - package.json
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!tests/*'
+  - '!scripts/*'
+  - '!docs/*'
+  - '!electron.vite.config.*'
+  - '!vitest.config.*'
+  - '!tsconfig*.json'
+  - '!tailwind.config.js'
+  - '!postcss.config.js'
+  - '!.native-cache/*'
+
+# الخطوط تُنسخ خارج أرشيف asar ليقرأها مولّد ملفات PDF مباشرة
+extraResources:
+  - from: resources/fonts
+    to: fonts
+    filter: ['**/*.ttf', 'LICENSE.txt']
+
+# المكتبة الأصلية لقاعدة البيانات يجب أن تبقى خارج الأرشيف حتى يمكن تحميلها
+asarUnpack:
+  - '**/*.node'
+  - node_modules/better-sqlite3/**
+
+npmRebuild: true
+buildDependenciesFromSource: false
+
+mac:
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+  category: public.app-category.business
+  icon: build/icon.png
+  darkModeSupport: false
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    CFBundleDisplayName: نظام إدارة الأعمال والحسابات
+    CFBundleDevelopmentRegion: ar
+    NSHumanReadableCopyright: © 2026
+
+dmg:
+  # عنوان لاتيني لأن أدوات نظام macOS لا تتعامل مع أسماء الأقراص العربية بثبات
+  title: Hesabat ${version}
+  artifactName: Hesabat-${version}-${arch}.dmg
+  contents:
+    - x: 140
+      y: 200
+      type: file
+    - x: 400
+      y: 200
+      type: link
+      path: /Applications
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.png
+  artifactName: Hesabat-Setup-${version}.exe
+  executableName: Hesabat
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: نظام إدارة الأعمال
+  installerLanguages: [ar-SA, en-US]
+  language: '1025'
+  deleteAppDataOnUninstall: false
+
+linux:
+  target: [AppImage]
+  category: Office
+  icon: build/icon.png
+  artifactName: Hesabat-${version}.AppImage
+
+publish: null

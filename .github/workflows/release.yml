@@ -1,0 +1,54 @@
+name: بناء المثبّتات
+
+# يُنتج مثبّت ويندوز ومثبّتات ماك معًا.
+# مثبّت ويندوز لا يمكن توليده من جهاز ماك بمعالج Apple Silicon،
+# لذا يُبنى هنا على نظام ويندوز حقيقي.
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            command: dist:win
+            artifact: windows-installer
+          - os: macos-latest
+            command: dist:mac
+            artifact: macos-installer
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: تثبيت الاعتماديات
+        run: npm ci
+
+      - name: فحص الأنواع والاختبارات
+        run: npm test
+
+      - name: بناء المثبّت
+        run: npm run ${{ matrix.command }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: رفع الناتج
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            release/*/*.exe
+            release/*/*.dmg
+            release/*/*.zip
+          if-no-files-found: error

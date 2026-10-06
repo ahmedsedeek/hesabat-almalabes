@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Cairo-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Cairo-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Cairo-Bold.ttf') format('truetype');
+}
+
+@layer base {
+  html {
+    font-family: 'Cairo', 'Segoe UI', 'Geeza Pro', Tahoma, sans-serif;
+  }
+  body {
+    @apply bg-slate-100 text-slate-800 antialiased;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  input,
+  textarea,
+  [contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  /* الأرقام تُعرض دائمًا من اليسار لليمين حتى داخل النص العربي */
+  .num {
+    font-variant-numeric: tabular-nums;
+    direction: ltr;
+    display: inline-block;
+    unicode-bidi: isolate;
+  }
+  /* النصوص التي يختلط فيها العربي بالإنجليزي تتبع اتجاه أول حرف قوي */
+  .bidi {
+    unicode-bidi: plaintext;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-1;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-slate-200 bg-white shadow-card;
+  }
+  .input {
+    @apply h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm text-slate-800
+           placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100
+           disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500;
+  }
+  .input-error {
+    @apply border-rose-400 focus:border-rose-500 focus:ring-rose-100;
+  }
+  .label {
+    @apply mb-1.5 block text-[13px] font-semibold text-slate-600;
+  }
+  .btn {
+    @apply inline-flex h-10 select-none items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold
+           transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-800;
+  }
+  .btn-secondary {
+    @apply btn border border-slate-300 bg-white text-slate-700 hover:bg-slate-50;
+  }
+  .btn-danger {
+    @apply btn bg-rose-600 text-white hover:bg-rose-700;
+  }
+  .btn-ghost {
+    @apply btn text-slate-600 hover:bg-slate-100;
+  }
+  .btn-sm {
+    @apply h-8 px-3 text-[13px];
+  }
+  .table-wrap {
+    @apply overflow-x-auto rounded-xl border border-slate-200 bg-white;
+  }
+  .tbl {
+    @apply w-full border-collapse text-sm;
+  }
+  .tbl thead th {
+    @apply sticky top-0 z-10 whitespace-nowrap border-b border-slate-200 bg-slate-50 px-3 py-2.5
+           text-right text-[13px] font-semibold text-slate-600;
+  }
+  .tbl tbody td {
+    @apply border-b border-slate-100 px-3 py-2.5 text-slate-700;
+  }
+  .tbl tbody tr:hover {
+    @apply bg-brand-50/40;
+  }
+  .tbl tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[12px] font-semibold;
+  }
+  .link {
+    @apply cursor-pointer font-semibold text-brand-600 hover:text-brand-700 hover:underline;
+  }
+}
+
+@media print {
+  body {
+    @apply bg-white;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

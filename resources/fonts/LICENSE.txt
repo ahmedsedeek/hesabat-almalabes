@@ -1,0 +1,5 @@
+Cairo font — Copyright The Cairo Project Authors (https://github.com/Gue3bara/Cairo)
+Licensed under the SIL Open Font License, Version 1.1.
+https://scripts.sil.org/OFL
+
+خط Cairo مرخَّص برخصة SIL Open Font License 1.1 ويسمح بإعادة التوزيع مع التطبيق.

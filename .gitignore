@@ -1,0 +1,13 @@
+node_modules/
+out/
+dist/
+release/
+.native-cache/
+*.log
+.DS_Store
+.env
+.vite/
+coverage/
+*.tsbuildinfo
+selftest-report.txt
+selftest-artifacts/
