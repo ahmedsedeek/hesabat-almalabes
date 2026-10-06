@@ -13,7 +13,7 @@ import { ImportService } from '@main/services/import.service'
 import { ReportsService } from '@main/reports/reports.service'
 import { toMinor, toRate } from '@shared/money'
 import type { Ctx } from '@main/core/context'
-import { cashAccountId, cashMethodId, createCtx, defaultWarehouseId } from './helpers'
+import { cashAccountId, cashMethodId, createCtx, defaultWarehouseId, removeDir } from './helpers'
 
 let ctx: Ctx
 let warehouseId: number
@@ -46,7 +46,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  fs.rmSync(tmpDir, { recursive: true, force: true })
+  removeDir(tmpDir)
 })
 
 describe('البيع للمستهلك وتكلفة التوصيل', () => {

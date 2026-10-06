@@ -11,7 +11,7 @@ import { InventoryService } from '@main/inventory/inventory.service'
 import { LedgerService } from '@main/accounting/ledger'
 import { ACC } from '@main/accounting/chart'
 import type { Ctx } from '@main/core/context'
-import { createAdmin } from './helpers'
+import { createAdmin, removeDir } from './helpers'
 
 /**
  * اختبار الأداء على حجم بيانات واقعي لعدة سنوات من العمل:
@@ -124,7 +124,7 @@ beforeAll(() => {
 
 afterAll(() => {
   db.close()
-  fs.rmSync(tmpDir, { recursive: true, force: true })
+  removeDir(tmpDir)
 })
 
 describe('الأداء على حجم بيانات كبير', () => {

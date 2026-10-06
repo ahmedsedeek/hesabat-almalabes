@@ -59,14 +59,7 @@ dmg:
   # عنوان لاتيني لأن أدوات نظام macOS لا تتعامل مع أسماء الأقراص العربية بثبات
   title: Hesabat ${version}
   artifactName: Hesabat-${version}-${arch}.dmg
-  contents:
-    - x: 140
-      y: 200
-      type: file
-    - x: 400
-      y: 200
-      type: link
-      path: /Applications
+  # يُترك التخطيط الافتراضي: تخصيصه يتطلب صورة خلفية تفشل على منصات البناء السحابية
 
 win:
   target:

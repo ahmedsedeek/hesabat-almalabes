@@ -15,7 +15,7 @@ import { LedgerService } from '@main/accounting/ledger'
 import { ACC } from '@main/accounting/chart'
 import { toMinor } from '@shared/money'
 import type { Ctx } from '@main/core/context'
-import { createAdmin } from './helpers'
+import { createAdmin, removeDir } from './helpers'
 import type { SessionUser } from '@shared/types'
 
 let tmpDir: string
@@ -35,7 +35,7 @@ afterEach(() => {
   } catch {
     // قد تكون مغلقة بعد الاستعادة
   }
-  fs.rmSync(tmpDir, { recursive: true, force: true })
+  removeDir(tmpDir)
 })
 
 function backupService(): BackupService {

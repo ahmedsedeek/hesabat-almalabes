@@ -1,3 +1,4 @@
+import fs from 'node:fs'
 import bcrypt from 'bcryptjs'
 import { openDatabase, type DB } from '@main/db/connection'
 import type { Ctx } from '@main/core/context'
@@ -32,6 +33,15 @@ export function createCtx(): Ctx {
   const db = createTestDb()
   const user = createAdmin(db)
   return { db, user, device: 'test' }
+}
+
+/**
+ * حذف مجلد مؤقت بأمان.
+ * ويندوز يُبقي قفلًا على ملفات SQLite لحظات بعد الإغلاق، فتفشل عملية الحذف
+ * بـ ENOTEMPTY إن لم تُعَد المحاولة.
+ */
+export function removeDir(dir: string): void {
+  fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 })
 }
 
 export function defaultWarehouseId(db: DB): number {
