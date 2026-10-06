@@ -18,9 +18,11 @@ jobs:
           - os: windows-latest
             command: dist:win
             artifact: windows-installer
+          # ZIP فقط على منصة البناء: خطوة فصل قرص DMG غير مستقرة على منصات البناء السحابية.
+          # ملف DMG يُولَّد محليًا على جهاز ماك بأمر npm run dist:mac
           - os: macos-latest
-            command: dist:mac
-            artifact: macos-installer
+            command: dist:mac:ci
+            artifact: macos-app
 
     runs-on: ${{ matrix.os }}
 

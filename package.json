@@ -21,7 +21,8 @@
     "pretest": "node scripts/use-abi.mjs node",
     "predev": "node scripts/use-abi.mjs electron",
     "prebuild": "node scripts/use-abi.mjs electron",
-    "selftest": "npm run build && electron . --self-test"
+    "selftest": "npm run build && electron . --self-test",
+    "dist:mac:ci": "npm run build && electron-builder --mac zip"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

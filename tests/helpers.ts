@@ -37,11 +37,16 @@ export function createCtx(): Ctx {
 
 /**
  * حذف مجلد مؤقت بأمان.
- * ويندوز يُبقي قفلًا على ملفات SQLite لحظات بعد الإغلاق، فتفشل عملية الحذف
- * بـ ENOTEMPTY إن لم تُعَد المحاولة.
+ * ويندوز يُبقي قفلًا على ملفات SQLite لحظات بعد الإغلاق، فتفشل عملية الحذف بـ ENOTEMPTY.
+ * تُعاد المحاولة عدة مرات، وإن بقي الملف مقفلًا نتجاهل الأمر:
+ * بقاء مجلد مؤقت لا يعني فشل الاختبار، والنظام ينظّفه لاحقًا.
  */
 export function removeDir(dir: string): void {
-  fs.rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 })
+  try {
+    fs.rmSync(dir, { recursive: true, force: true, maxRetries: 30, retryDelay: 200 })
+  } catch {
+    // تجاهل — التنظيف ليس جزءًا مما يُختبر
+  }
 }
 
 export function defaultWarehouseId(db: DB): number {
